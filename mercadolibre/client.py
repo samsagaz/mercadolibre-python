@@ -104,8 +104,57 @@ class Client(object):
         """
         return self._get('/users/{}'.format(user_id))
 
-    def update_user(self):
-        raise NotImplementedError
+    @valid_token
+    def update_user(self, user_id, identification_type, identification_number, address,
+                    state, city, zip_code, phone, phone_area_code, phone_number, phone_extension,
+                    first_name, last_name, company, company_corporate_name, company_brand_name,
+                    mercadoenvios):
+        """Update User account.
+
+        Args:
+            user_id:
+            identification_type:
+            identification_number:
+            address:
+            state:
+            city:
+            zip_code:
+            phone:
+                area_code:
+                number:
+                extension:
+            first_name:
+            last_name:
+            company:
+                corporate_name:
+                brand_name:
+            mercadoenvios:
+
+        Returns:
+            A dict.
+        """
+       data = {
+            'user_id': user_id,
+            'identification_type': identrification_type,
+            'identification_number': identification_number,
+            'address': address,
+            'state': state,
+            'city': city,
+            'zip_code': zip_code,
+            'phone': phone,
+            'area_code': phone.area_code,
+            'number': phone.number,
+            'extension': phone.extension,
+            'first_name': first_name,
+            'last_name': last_name,
+            'company': company,
+            'corporate_name': company.corporate_name,
+            'brand_name': company.brand_name,
+            'mercadoenvios': mercadoenvios,
+        }
+        data.update(kwargs)
+        return self._post('/users', json=data)
+
 
     @valid_token
     def get_user_address(self, user_id):
